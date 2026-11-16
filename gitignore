@@ -1,0 +1,12 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# RPM build output
+*/packaging/rpm/dist-rpm/
+*.rpm
+*.src.rpm
+
+# Editor / OS noise
+*~
+.DS_Store
