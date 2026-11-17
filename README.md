@@ -2,7 +2,7 @@
 
 **Dependency-only RPM metapackages for composing LinSpectacles installation sets.**
 
-Current repository release: **0.0.2**
+Current repository release: **0.0.3**
 
 Repository: <https://github.com/linspectacles/linspectacles-metapackages>
 
@@ -18,7 +18,7 @@ The metapackages here only express installation relationships between those inde
 
 | Metapackage | Composition | Status |
 | --- | --- | --- |
-| **`linspectacles`** | `linspectacles-hub` + `linspectacles-modules` | **Available — 0.0.2** |
+| **`linspectacles`** | requires `linspectacles-hub`; recommends `linspectacles-modules` | **Available — 0.0.3** |
 | `linspectacles-applets` | All official LinSpectacles applet RPMs | **Work in progress** |
 | `linspectacles-full` | `linspectacles` + `linspectacles-applets` | **Work in progress** |
 
@@ -28,7 +28,7 @@ The intended package relationship is:
 linspectacles-full                         [WIP]
 ├── linspectacles
 │   ├── linspectacles-hub
-│   └── linspectacles-modules
+│   └── linspectacles-modules (recommended)
 └── linspectacles-applets                  [WIP]
     └── all official LinSpectacles applet RPMs
 ```
@@ -40,9 +40,7 @@ Only **`linspectacles`** is implemented in this repository release. The two futu
 ```text
 linspectacles-metapackages/
 ├── .github/
-│   ├── REPOSITORY-ABOUT.md
-│   └── workflows/
-│       └── validate.yml
+│   └── REPOSITORY-ABOUT.md
 ├── linspectacles/
 │   ├── README.md
 │   └── packaging/
@@ -54,25 +52,23 @@ linspectacles-metapackages/
 │   └── README.md
 ├── linspectacles-full/
 │   └── README.md
-├── tools/
-│   └── validate_repository.py
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
 
-This layout is intentional: each metapackage occupies a sibling directory, while repository-wide documentation, validation, workflows and licensing remain at the repository root.
+This layout is intentional: each metapackage occupies a sibling directory, while repository-wide documentation and licensing remain at the repository root.
 
 ## Implemented metapackage: linspectacles
 
-The currently implemented metapackage requires exactly:
+The currently implemented metapackage requires the Hub and recommends the optional Hub Modules metapackage:
 
 ```text
-linspectacles-hub
-linspectacles-modules
+Requires:   linspectacles-hub
+Recommends: linspectacles-modules
 ```
 
-It has no runtime payload of its own and deliberately has no exact dependency-version pins.
+Standard DNF installations include recommended dependencies by default. The package has no runtime payload of its own and deliberately has no exact dependency-version pins.
 
 See [`linspectacles/README.md`](linspectacles/README.md) for the package contract and build instructions.
 
@@ -84,16 +80,6 @@ The dependencies remain separately developed and packaged:
 - LinSpectacles Hub Modules: <https://github.com/linspectacles/linspectacles-modules>
 
 Nothing from either repository is vendored into this metapackage repository.
-
-## Validation
-
-Run the repository checks with:
-
-```bash
-python3 tools/validate_repository.py
-```
-
-The validator checks the repository layout, the implemented `linspectacles` package identity and exact dependency contract, the WIP boundaries for the future sibling metapackages, shell syntax, and RPM source generation.
 
 ## License
 

@@ -4,7 +4,7 @@
 
 **Convenience RPM metapackage for installing [LinSpectacles Hub](https://github.com/linspectacles/linspectacles-hub) together with the official [LinSpectacles Hub Modules](https://github.com/linspectacles/linspectacles-modules).**
 
-Current metapackage release: **0.0.2**
+Current metapackage release: **0.0.3**
 
 Source repository: <https://github.com/linspectacles/linspectacles-metapackages>
 
@@ -12,10 +12,12 @@ Source repository: <https://github.com/linspectacles/linspectacles-metapackages>
 
 `linspectacles` is the small dependency-only metapackage for the core LinSpectacles workbench.
 
-It installs:
+Its dependency contract is:
 
-- `linspectacles-hub` — the LinSpectacles host/workbench.
-- `linspectacles-modules` — the metapackage for the official optional Hub Modules.
+- `linspectacles-hub` — **required** LinSpectacles host/workbench.
+- `linspectacles-modules` — **recommended** metapackage for the official optional Hub Modules.
+
+Standard DNF installations include recommended dependencies by default, so a normal `dnf install linspectacles` still installs the Hub together with the official Hub Module set. The Modules metapackage can subsequently be removed without requiring removal of `linspectacles` or `linspectacles-hub`.
 
 The package contains **no application runtime, applet implementation, Hub Module implementation, desktop entry, helper binary, or other runtime payload of its own**. Those files remain owned by their individual RPM packages.
 
@@ -26,7 +28,7 @@ There are deliberately no exact dependency-version pins. The Hub and Hub Modules
 ```text
 linspectacles
 ├── linspectacles-hub
-└── linspectacles-modules
+└── linspectacles-modules (recommended)
     ├── linspectacles-module-applet-organizer
     ├── linspectacles-module-boot-environment
     ├── linspectacles-module-encyclopedia
@@ -35,9 +37,9 @@ linspectacles
     └── linspectacles-module-system-pulse
 ```
 
-Installing this metapackage therefore installs the Hub plus the complete official Hub Module set available through `linspectacles-modules`.
+A normal installation therefore installs the Hub plus the complete official Hub Module set available through `linspectacles-modules`.
 
-The individual packages remain independently versioned and separately owned. While `linspectacles` is installed, both `linspectacles-hub` and `linspectacles-modules` are required dependencies; removing one of them may also require removing this metapackage.
+The individual packages remain independently versioned and separately owned. `linspectacles-hub` remains a required dependency of `linspectacles`; `linspectacles-modules` is recommended and may be removed independently.
 
 ## Installation
 
@@ -71,7 +73,7 @@ This repository does not configure a COPR or other package repository by itself.
 linspectacles-full                         [WIP]
 ├── linspectacles                          [implemented here]
 │   ├── linspectacles-hub
-│   └── linspectacles-modules
+│   └── linspectacles-modules (recommended)
 └── linspectacles-applets                  [WIP]
 ```
 
@@ -89,7 +91,7 @@ linspectacles/
         └── linspectacles.spec
 ```
 
-The repository-wide `LICENSE`, validation tooling and GitHub workflow are held at the `linspectacles-metapackages` repository root.
+The repository-wide `LICENSE` is held at the `linspectacles-metapackages` repository root.
 
 ## Fedora RPM source and build
 

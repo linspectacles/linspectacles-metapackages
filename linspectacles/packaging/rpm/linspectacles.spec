@@ -1,5 +1,5 @@
 Name:           linspectacles
-Version:        0.0.2
+Version:        0.0.3
 Release:        1%{?dist}
 Summary:        LinSpectacles core workbench metapackage
 License:        GPL-3.0-or-later
@@ -10,16 +10,17 @@ Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       linspectacles-hub
-Requires:       linspectacles-modules
+Recommends:     linspectacles-modules
 
 %description
 linspectacles is the convenience metapackage for installing the LinSpectacles
-Hub together with the complete official LinSpectacles Hub Modules set.
+Hub, with the complete official LinSpectacles Hub Modules set recommended for
+normal installation.
 
 This package contains no application, applet, Hub Module, helper or runtime
 payload. The Hub and Modules remain separately packaged, versioned and
-upgradeable. Removing one of the required packages may also require removing
-this metapackage.
+upgradeable. The Hub is required; the Modules metapackage is recommended and
+may be removed independently.
 
 %prep
 %autosetup
@@ -35,6 +36,10 @@ this metapackage.
 %doc README.md
 
 %changelog
+* Tue Nov 17 2026 brunonlinespace - 0.0.3-1
+- Keep linspectacles-hub as a required dependency.
+- Change linspectacles-modules from Requires to Recommends so the Modules metapackage can be removed independently while remaining installed by default under standard DNF weak-dependency behavior.
+
 * Mon Nov 16 2026 brunonlinespace - 0.0.2-1
 - Move the metapackage source into the shared linspectacles-metapackages repository layout.
 - Update the canonical source repository to linspectacles-metapackages.
